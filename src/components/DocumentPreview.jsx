@@ -12,7 +12,7 @@ function Line({ label, value }) {
 
 function ConsentLine({ checked, text }) {
   return (
-    <p className="doc-line">
+    <p className="doc-line doc-abzac">
       [{checked ? 'x' : ' '}] {text}
     </p>
   )
@@ -50,36 +50,34 @@ export default function DocumentPreview({ form, state }) {
         <span className="doc-preview-sub">A4 · Word пішімі</span>
       </div>
       <div className="doc-page">
-        <div className="doc-annex">{form.annex}</div>
-
         {form.docBody === 'application-semi' && (
           <>
             <div className="doc-header-table">
-              <p>{v('orgName') || '________________'} {v('orgHeadName') ? `басшысы ${v('orgHeadName')}-ға` : 'басшысы ________________-ға'}</p>
+              <p>{v('orgName') || '________________'} басшысы {v('orgHeadName') || '________________'}</p>
               <p>БСН {v('bin') || '____________'}</p>
               <p>кімнен: {v('applicantName') || '____________________'}</p>
               <p>туған күні: {toDDMMYYYY(v('birthDate')) || '__.__.____'}</p>
               <p>мекенжайы: {v('address') || '____________________'}</p>
             </div>
             <h3 className="doc-h1">ӨТІНІШ</h3>
-            <p className="doc-line">
+            <p className="doc-line doc-abzac">
               Мені жартылай стационарлық жағдайда арнаулы әлеуметтік қызметтер көрсетуге қабылдауыңызды сұраймын.
             </p>
-            <p className="doc-line" style={{ marginTop: 10 }}>Қоса берілетін құжаттар:</p>
+            <p className="doc-line doc-abzac" style={{ marginTop: 10 }}>Қоса берілетін құжаттар:</p>
             {(state.attachments || []).filter((a) => a.name.trim()).length ? (
               <ol className="doc-attach-list">
                 {state.attachments.filter((a) => a.name.trim()).map((a) => (
-                  <li key={a.id}>{a.name}</li>
+                  <li key={a.id} className="doc-abzac">{a.name}</li>
                 ))}
               </ol>
             ) : (
-              <p className="doc-line doc-muted">— тізім бос —</p>
+              <p className="doc-line doc-muted doc-abzac">— тізім бос —</p>
             )}
             {form.consents.map((cn) => (
               <ConsentLine key={cn.key} checked={c(cn.key)} text={cn.text} />
             ))}
-            <p className="doc-line" style={{ marginTop: 14 }}>{toKzLongDate(v('signDate'))}</p>
-            <p className="doc-sig-line">_______________<br /><span className="doc-muted">(өтініш иесінің қолы)</span></p>
+            <p className="doc-line doc-abzac" style={{ marginTop: 14 }}>{toKzLongDate(v('signDate'))}</p>
+            <p className="doc-sig-line doc-sig-center">_______________<br /><span className="doc-muted">(өтініш иесінің қолы)</span></p>
             <p className="doc-line" style={{ marginTop: 10 }}>Өтінішті қабылдаған адам:</p>
             <p className="doc-line">{v('acceptedBy') || '____________________'}</p>
             <p className="doc-muted">(Т.А.Ә., лауазымы, қолы)</p>
@@ -89,7 +87,7 @@ export default function DocumentPreview({ form, state }) {
         {form.docBody === 'application-home' && (
           <>
             <div className="doc-header-table">
-              <p>{v('orgName') || '________________'} {v('orgHeadName') ? `басшысы ${v('orgHeadName')}-ға` : 'басшысы / әкімге ________________'}</p>
+              <p>{v('orgName') || '________________'} басшысы {v('orgHeadName') || '________________'}</p>
               <p>БСН {v('bin') || '____________'}</p>
               <p>кімнен: {v('applicantName') || '____________________'}</p>
               <p>туған күні: {toDDMMYYYY(v('birthDate')) || '__.__.____'}</p>
@@ -97,14 +95,14 @@ export default function DocumentPreview({ form, state }) {
               <p>телефон: {v('phone') || '____________'}</p>
             </div>
             <h3 className="doc-h1">ӨТІНІШ</h3>
-            <p className="doc-line">Маған үйде әлеуметтік қызмет көрсетуді ұйымдастыруыңызды сұраймын.</p>
-            <Line label="Мүгедектік санаты:" value={v('disabilityCategory')} />
-            <Line label="Отбасы мүшелері:" value={v('familyMembers')} />
+            <p className="doc-line doc-abzac">Маған үйде әлеуметтік қызмет көрсетуді ұйымдастыруыңызды сұраймын.</p>
+            <p className="doc-line doc-abzac"><span className="doc-line-label">Мүгедектік санаты:</span> {v('disabilityCategory') || '____________________'}</p>
+            <p className="doc-line doc-abzac"><span className="doc-line-label">Отбасы мүшелері:</span> {v('familyMembers') || '____________________'}</p>
             {form.consents.map((cn) => (
               <ConsentLine key={cn.key} checked={c(cn.key)} text={cn.text} />
             ))}
-            <p className="doc-line" style={{ marginTop: 14 }}>{toKzLongDate(v('signDate'))}</p>
-            <p className="doc-sig-line">_______________<br /><span className="doc-muted">(өтініш иесінің қолы)</span></p>
+            <p className="doc-line doc-abzac" style={{ marginTop: 14 }}>{toKzLongDate(v('signDate'))}</p>
+            <p className="doc-sig-line doc-sig-center">_______________<br /><span className="doc-muted">(өтініш иесінің қолы)</span></p>
             <p className="doc-line" style={{ marginTop: 10 }}>Өтінішті қабылдаған адам:</p>
             <p className="doc-line">{v('acceptedBy') || '____________________'}</p>
             <p className="doc-muted">(Т.А.Ә., лауазымы, қолы)</p>
@@ -148,8 +146,8 @@ export default function DocumentPreview({ form, state }) {
                   <td>{v('orgHeadName') || '____________________'}</td>
                 </tr>
                 <tr>
-                  <td>_______________<br /><span className="doc-muted">(қолы)</span></td>
-                  <td>_______________<br /><span className="doc-muted">(Т.А.Ә.)</span></td>
+                  <td style={{ textAlign: 'center' }}>_______________<br /><span className="doc-muted">(қолы)</span></td>
+                  <td style={{ textAlign: 'center' }}>_______________<br /><span className="doc-muted">(Т.А.Ә.)</span></td>
                 </tr>
               </tbody>
             </table>
@@ -181,8 +179,8 @@ export default function DocumentPreview({ form, state }) {
                   <td>{v('orgHeadName') || '____________________'}</td>
                 </tr>
                 <tr>
-                  <td>_______________<br /><span className="doc-muted">(қолы)</span></td>
-                  <td>_______________<br /><span className="doc-muted">(Т.А.Ә.)</span></td>
+                  <td style={{ textAlign: 'center' }}>_______________<br /><span className="doc-muted">(қолы)</span></td>
+                  <td style={{ textAlign: 'center' }}>_______________<br /><span className="doc-muted">(Т.А.Ә.)</span></td>
                 </tr>
               </tbody>
             </table>
